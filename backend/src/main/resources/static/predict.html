@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fraud Prediction</title>
+    <link rel="stylesheet" href="predict.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Fraud Prediction</h1>
+    <p>Enter transaction details and click predict.</p>
+
+    <div id="fields-grid"></div>
+
+    <button id="predictBtn" class="predict-btn">
+        Predict Transaction
+    </button>
+
+    <h3>Result</h3>
+    <pre id="result-box"></pre>
+
+    <h3>Error</h3>
+    <pre id="error-box"></pre>
+
+    <p class="endpoint">API: /api/ml/predict</p>
+</div>
+
+<script src="predict.js"></script>
+</body>
+</html>

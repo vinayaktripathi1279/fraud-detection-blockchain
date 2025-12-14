@@ -1,0 +1,66 @@
+body {
+    background-color: #021B33;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 90%;
+    margin: auto;
+}
+
+#fields-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.field label {
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.field input {
+    width: 100%;
+    padding: 7px;
+    border-radius: 4px;
+    border: none;
+}
+
+/* Simple white button */
+.predict-btn {
+    background-color: #ffffff;
+    color: #021B33;
+    border: 1px solid #cccccc;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto;
+}
+
+.predict-btn:hover {
+    background-color: #f2f2f2;
+}
+
+.predict-btn:active {
+    background-color: #e6e6e6;
+}
+
+pre {
+    background: rgba(255,255,255,0.1);
+    padding: 12px;
+    border-radius: 4px;
+    white-space: pre-wrap;
+}
+
+.endpoint {
+    margin-top: 20px;
+    font-size: 13px;
+    opacity: 0.7;
+}

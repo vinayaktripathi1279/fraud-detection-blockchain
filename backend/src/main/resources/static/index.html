@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fraud Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        input {
+            width: 200px;
+            margin: 5px;
+            padding: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #1976D2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .fraud {
+            color: red;
+        }
+        .safe {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Fraud Detection System</h2>
+
+<label>Time:</label><br>
+<input type="number" id="Time" /><br>
+
+<label>V1:</label><br>
+<input type="number" id="V1" step="0.01" /><br>
+
+<label>V2:</label><br>
+<input type="number" id="V2" step="0.01" /><br>
+
+<label>V3:</label><br>
+<input type="number" id="V3" step="0.01" /><br>
+
+<label>Amount:</label><br>
+<input type="number" id="Amount" /><br>
+
+<button onclick="predict()">Predict Fraud</button>
+
+<div id="result"></div>
+
+<script>
+    function predict() {
+        const data = {
+            Time: Number(document.getElementById("Time").value),
+            V1: Number(document.getElementById("V1").value),
+            V2: Number(document.getElementById("V2").value),
+            V3: Number(document.getElementById("V3").value),
+            Amount: Number(document.getElementById("Amount").value)
+        };
+
+        fetch("http://localhost:8080/api/ml/predict", {
+            method: "POST",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify(data)
+        })
+        .then(resp => resp.text())
+        .then(text => {
+            document.getElementById("result").innerHTML = text.includes("fraud': True")
+                ? "<span class='fraud'>⚠️ Fraud Detected!</span>"
+                : "<span class='safe'>✔️ Safe Transaction</span>";
+        })
+        .catch(err => {
+            document.getElementById("result").innerHTML = "<span class='fraud'>Error: " + err + "</span>";
+        });
+    }
+</script>
+
+</body>
+</html>
