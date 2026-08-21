@@ -10,8 +10,9 @@ const getApiBaseUrl = () => {
     if (host === "localhost" || host === "127.0.0.1") {
         return "http://localhost:8080";
     }
-    // Replace this string with your actual Render deployment backend URL after deploying to Render
+    // Live deployed Render backend URL
     return window.ENV_API_URL || "https://fraud-detection-blockchain.onrender.com";
+
 };
 
 // Populate input fields

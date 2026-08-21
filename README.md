@@ -9,12 +9,12 @@
 
 ---
 
-## 🌐 Live Demo & Deployment Links
+## 🌐 Live Demo & Production Deployment Links
 
-| Component | Platform | Status / Link |
+| Component | Platform | Live URL / Status |
 | :--- | :--- | :--- |
-| **Frontend Dashboard UI** | **Vercel** | 🔗 [Live Vercel Demo](https://fraud-detection-blockchain.vercel.app) *(Deploy step below)* |
-| **Backend REST API + ML** | **Render** | 🔗 [Live Render API Endpoint](https://fraud-detection-blockchain.onrender.com) *(Deploy step below)* |
+| **Frontend Dashboard UI** | **Vercel** | 🔗 [Live Vercel Frontend App](https://fraud-detection-blockchain-osblw3p6z.vercel.app) |
+| **Backend REST API + ML** | **Render** | 🔗 [Live Render Backend Service](https://fraud-detection-blockchain.onrender.com) |
 | **GitHub Repository** | **GitHub** | 🔗 [vinayaktripathi1279/fraud-detection-blockchain](https://github.com/vinayaktripathi1279/fraud-detection-blockchain) |
 
 ---
@@ -24,15 +24,15 @@
 This project is a **Financial Fraud Detection & Cryptographic Verification System** designed to predict whether credit card transactions are **Fraudulent or Safe** using a Machine Learning model, while immutably logging validated transactions to a **Cryptographic Blockchain Ledger**.
 
 ```
-[ Frontend (Vercel) ] ── (HTTP POST /api/ml/predict) ──> [ Spring Boot API (Render) ]
-                                                                 │
-                                                      (Executes predict.py)
-                                                                 │
-                                                       [ Scikit-Learn Model ]
-                                                                 │
-                                                      (Appends to Ledger)
-                                                                 │
-                                                       [ SHA-256 Blockchain ]
+[ Frontend (Vercel) ] ── (HTTP POST /api/ml/predict) ──> [ Spring Boot API (Render Container) ]
+                                                                      │
+                                                           (Executes predict.py)
+                                                                      │
+                                                            [ Scikit-Learn Model ]
+                                                                      │
+                                                           (Appends to Ledger)
+                                                                      │
+                                                            [ SHA-256 Blockchain ]
 ```
 
 ---
@@ -43,7 +43,7 @@ This project is a **Financial Fraud Detection & Cryptographic Verification Syste
 - **Blockchain Audit Ledger**: Cryptographically appends verified records into an immutable SHA-256 block structure.
 - **Spring Boot REST Backend**: Manages process isolation between Java server and Python ML inference runtime.
 - **Responsive Web UI**: Built with modern CSS & JavaScript for interactive feature evaluation and instant risk assessment.
-- **Cloud Deployment Ready**: Containerized with multi-stage Docker build for Render and configured for Vercel edge deployment.
+- **Automated Cloud Deployments**: Live automated deployments configured on Vercel and Render.
 
 ---
 
@@ -52,27 +52,7 @@ This project is a **Financial Fraud Detection & Cryptographic Verification Syste
 * **Backend**: Java 17, Spring Boot, Jackson JSON, SHA-256 Cryptography
 * **Machine Learning**: Python 3.11, Scikit-Learn (Random Forest), Pandas, NumPy, Joblib
 * **Frontend**: HTML5, CSS3 (Inter Typography), Modern JavaScript (Fetch API)
-* **DevOps**: Docker, Vercel, Render, Git / GitHub
-
----
-
-## 🚀 How to Deploy
-
-### Option 1: Deploy Backend to Render (Docker)
-1. Log in to [Render](https://render.com/).
-2. Click **New +** -> **Web Service**.
-3. Connect your GitHub Repository: `vinayaktripathi1279/fraud-detection-blockchain`.
-4. Select **Docker** as the Runtime.
-5. Render will automatically read the root [Dockerfile](file:///c:/Users/vinay/Downloads/PROJECT/fraud-detection-blockchain/Dockerfile) and deploy your Spring Boot + Python ML container!
-6. Copy your service URL (e.g. `https://fraud-detection-blockchain.onrender.com`).
-
-### Option 2: Deploy Frontend to Vercel
-1. Log in to [Vercel](https://vercel.com/).
-2. Click **Add New** -> **Project**.
-3. Import `vinayaktripathi1279/fraud-detection-blockchain`.
-4. Set **Root Directory** to `frontend`.
-5. Click **Deploy**!
-6. *(Optional)* Update `ENV_API_URL` in [frontend/predict.js](file:///c:/Users/vinay/Downloads/PROJECT/fraud-detection-blockchain/frontend/predict.js) with your deployed Render Backend URL.
+* **DevOps**: Docker, Vercel API, Render REST API, GitHub PAT
 
 ---
 
