@@ -15,7 +15,7 @@
 | :--- | :--- | :--- |
 | **Frontend Dashboard UI** | **Vercel** | 🔗 [Live Vercel Frontend App](https://fraud-detection-blockchain-osblw3p6z.vercel.app) |
 | **Backend REST API + ML** | **Render** | 🔗 [Live Render Backend Service](https://fraud-detection-blockchain.onrender.com) |
-| **GitHub Repository** | **GitHub** | 🔗 [vinayaktripathi1279/fraud-detection-blockchain](https://github.com/vinayaktripathi1279/fraud-detection-blockchain) |
+
 
 ---
 
