@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/ml")
+@CrossOrigin(origins = "*")
 public class FraudMLController {
 
     @PostMapping("/predict")
@@ -19,15 +20,29 @@ public class FraudMLController {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            // Run Python script with the JSON input string
+            // Determine python executable path dynamically
+            String pythonExec = System.getenv("PYTHON_PATH");
+            if (pythonExec == null || pythonExec.trim().isEmpty()) {
+                String osName = System.getProperty("os.name").toLowerCase();
+                pythonExec = osName.contains("win") ? "python" : "python3";
+            }
+
+            // Determine ML directory path
+            File mlDir = new File("mlmodel");
+            if (!mlDir.exists()) {
+                mlDir = new File("backend/mlmodel");
+            }
+            if (!mlDir.exists()) {
+                mlDir = new File(".");
+            }
+
             ProcessBuilder pb = new ProcessBuilder(
-                    "C:\\Users\\vinay\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+                    pythonExec,
                     "predict.py",
                     inputJson
             );
 
-            // Folder where predict.py + model files exist
-            pb.directory(new File("C:\\Users\\vinay\\Downloads\\PROJECT\\fraud-detection-blockchain\\backend\\mlmodel"));
+            pb.directory(mlDir);
             pb.redirectErrorStream(true);
 
             Process process = pb.start();
@@ -47,7 +62,7 @@ public class FraudMLController {
 
             // If Python script fails
             if (exitCode != 0) {
-                response.put("error", "Python crashed");
+                response.put("error", "Python execution failed with exit code " + exitCode);
                 response.put("details", output.toString());
                 return response;
             }
@@ -61,4 +76,4 @@ public class FraudMLController {
             return response;
         }
     }
-}
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection & Blockchain Audit</title>
+    <link rel="stylesheet" href="predict.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <span class="shield-icon">🛡️</span>
+            <h2>Fraud Detection System</h2>
+        </div>
+        <p class="subtitle">Machine Learning Fraud Prediction & Cryptographic Ledger Verification</p>
+    </header>
+
+    <main class="card">
+        <h3>Input Transaction Parameters</h3>
+        <p class="instruction">Enter features (V1–V28 PCA vectors, Time, and Amount) to evaluate fraud probability.</p>
+
+        <div id="fields-grid" class="fields-grid"></div>
+
+        <button id="predictBtn" class="predict-btn">
+            Predict Transaction Risk
+        </button>
+
+        <div class="results-section">
+            <div class="result-card">
+                <h4>Prediction Result</h4>
+                <pre id="result-box">Awaiting prediction request...</pre>
+            </div>
+
+            <div class="error-card">
+                <h4>Diagnostics / System Output</h4>
+                <pre id="error-box">No errors reported.</pre>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Backend API Target: <code>/api/ml/predict</code> | Powered by Spring Boot, Scikit-Learn & Docker</p>
+    </footer>
+</div>
+
+<script src="predict.js"></script>
+</body>
+</html>

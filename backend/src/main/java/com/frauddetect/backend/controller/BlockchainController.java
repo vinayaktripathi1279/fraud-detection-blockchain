@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/blockchain")
+@CrossOrigin(origins = "*")
 public class BlockchainController {
+
 
     private final BlockchainService blockchainService;
 

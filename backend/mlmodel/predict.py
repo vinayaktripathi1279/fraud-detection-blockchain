@@ -9,7 +9,7 @@ import sys
 import json
 import os
 
-# lazy imports (so we can show helpful errors if not installed)
+# Lazy imports
 try:
     import pandas as pd
     import joblib
@@ -33,12 +33,10 @@ def load_models(model_path="fraud_model.pkl", scaler_path="scaler.pkl"):
 
 def read_input():
     """
-    Read JSON either from argv[1] (preferred when Java passes it as a single arg)
-    or from stdin (useful for manual testing).
+    Read JSON either from argv[1] (when Java passes it)
+    or from stdin (manual testing).
     """
-    raw = None
     if len(sys.argv) > 1:
-        # join argv[1:] just in case the caller split the JSON by mistake
         raw = " ".join(sys.argv[1:])
     else:
         raw = sys.stdin.read()
@@ -50,68 +48,63 @@ def read_input():
 
     try:
         data = json.loads(raw)
-        return data, raw
+        return data
     except Exception as e:
-        # show raw input to help debugging (what Java actually sent)
         print("RAW_INPUT:", raw)
         print("PYTHON ERROR:", e)
         sys.exit(1)
 
 
 def main():
-    # columns expected by the model (same order used during training)
+    # Model feature order
     columns = [
         "Time","V1","V2","V3","V4","V5","V6","V7","V8","V9",
         "V10","V11","V12","V13","V14","V15","V16","V17","V18","V19",
         "V20","V21","V22","V23","V24","V25","V26","V27","V28","Amount"
     ]
 
-    # ensure we are running from folder where the model files exist
-    # (the Java ProcessBuilder sets the working directory; otherwise adjust paths)
+    # Load ML model and scaler
     model, scaler = load_models("fraud_model.pkl", "scaler.pkl")
 
-    data, raw_input = read_input()
+    # Read input JSON
+    data = read_input()
 
-    # if the caller passed a top-level list, try to use the first item
+    # Handle array input
     if isinstance(data, list) and len(data) > 0:
         data = data[0]
 
     if not isinstance(data, dict):
-        print("INPUT MUST BE A JSON OBJECT (or an array with one object).")
+        print("INPUT MUST BE A JSON OBJECT")
         sys.exit(1)
 
-    # fill missing features with 0 (or you can choose another default)
+    # Fill missing values with 0
     for col in columns:
         if col not in data:
             data[col] = 0
 
-    # Build dataframe in the correct column order
-    try:
-        df = pd.DataFrame([data], columns=columns)
-    except Exception as e:
-        print("ERROR BUILDING DATAFRAME:", e)
-        print("RAW_INPUT:", raw_input)
-        sys.exit(1)
+    # Build dataframe
+    df = pd.DataFrame([data], columns=columns)
 
-    # Scale and predict
-    try:
-        scaled = scaler.transform(df)
-    except Exception as e:
-        print("SCALER TRANSFORM ERROR:", e)
-        sys.exit(1)
+    # Scale input
+    scaled = scaler.transform(df)
 
-    try:
-        pred = model.predict(scaled)[0]
-    except Exception as e:
-        print("MODEL PREDICTION ERROR:", e)
-        sys.exit(1)
+    # ML prediction
+    pred = model.predict(scaled)[0]
 
+    # --------------------------------------------------
+    # 🔴 DEMO OVERRIDE (FOR UI / PRESENTATION PURPOSE)
+    # If Amount is very high, force fraud
+    # --------------------------------------------------
+    if float(data.get("Amount", 0)) > 50000:
+        pred = 1
+
+    # Prepare result
     result = {
         "fraud": bool(int(pred)),
         "message": "Fraud Transaction" if int(pred) == 1 else "Safe Transaction"
     }
 
-    # Java expects plain JSON string; print to stdout
+    # Send JSON back to Spring Boot
     print(json.dumps(result))
 
 

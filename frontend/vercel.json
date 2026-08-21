@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    { "src": "/", "dest": "/predict.html" },
+    { "src": "/predict", "dest": "/predict.html" },
+    { "src": "/index", "dest": "/index.html" }
+  ]
+}
